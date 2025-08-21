@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login • Empower Hub</title>
   <link rel="stylesheet" href="styles.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script type="module" src="firebase.js"></script>
   <script type="module" src="auth.js" defer></script>
 </head>
@@ -15,24 +12,37 @@
   <main class="auth-card">
     <a class="logo" href="./">Empower<span>Hub</span></a>
     <h1>Account Access</h1>
-    <p class="muted small center">Create an account or log in to enroll and track your progress.</p>
+    <p class="muted small center">Log in or create an account to enroll and track your progress.</p>
 
     <div class="tabs">
       <button class="tab-btn active" data-tab="login">Login</button>
       <button class="tab-btn" data-tab="register">Register</button>
     </div>
 
+    <!-- Login Tab -->
     <section id="tab-login" class="tab active">
-      <label>Email <input type="email" id="loginEmail" required placeholder="you@example.com"/></label>
-      <label>Password <input type="password" id="loginPassword" required placeholder="••••••••"/></label>
+      <label>Email <input type="email" id="loginEmail" placeholder="you@example.com"/></label>
+      <label>Password <input type="password" id="loginPassword" placeholder="••••••••"/></label>
       <button class="btn primary full" id="loginBtn">Login</button>
+
+      <hr>
+      <p class="center small">Or sign in with:</p>
+      <button class="btn full" id="googleBtn">Google</button>
+      <button class="btn full" id="emailLinkBtn">Email Link (Passwordless)</button>
+      <div id="recaptcha-container"></div>
+      <label>Phone <input type="tel" id="phoneInput" placeholder="+91XXXXXXXXXX"/></label>
+      <button class="btn full" id="phoneBtn">Send OTP</button>
+      <input type="text" id="otpInput" placeholder="Enter OTP" style="display:none"/>
+      <button class="btn full" id="verifyOtpBtn" style="display:none">Verify OTP</button>
+
       <p class="tiny center"><a href="#" id="toRegister">Don’t have an account? Register</a></p>
     </section>
 
+    <!-- Register Tab -->
     <section id="tab-register" class="tab">
-      <label>Full Name <input type="text" id="regName" required placeholder="Your Name"/></label>
-      <label>Email <input type="email" id="regEmail" required placeholder="you@example.com"/></label>
-      <label>Password <input type="password" id="regPassword" required placeholder="Min 6 characters"/></label>
+      <label>Full Name <input type="text" id="regName" placeholder="Your Name"/></label>
+      <label>Email <input type="email" id="regEmail" placeholder="you@example.com"/></label>
+      <label>Password <input type="password" id="regPassword" placeholder="Min 6 characters"/></label>
       <button class="btn primary full" id="registerBtn">Create Account</button>
       <p class="tiny center"><a href="#" id="toLogin">Already have an account? Login</a></p>
     </section>
