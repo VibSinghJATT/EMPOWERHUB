@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard • Empower Hub</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="firebase.js"></script>
+  <script type="module">
+    import { auth, onAuthStateChanged, db, collection, query, where, getDocs } from './firebase.js';
+
+    const userNameEl = document.getElementById('userName');
+    const userEmailEl = document.getElementById('userEmail');
+    const enrollListEl = document.getElementById('enrollList');
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+      userEmailEl.textContent = user.email || '';
+      userNameEl.textContent = user.displayName || 'User';
+
+      // Load enrollments
+      const q = query(collection(db, 'enrollments'), where('uid', '==', user.uid));
+      const snap = await getDocs(q);
+      enrollListEl.innerHTML = '';
+      if (snap.empty) {
+        enrollListEl.innerHTML = '<li class="muted">No enrollments yet. Go to the <a href="./#packages">Programs</a> and enroll.</li>';
+      } else {
+        snap.forEach((doc) => {
+          const d = doc.data();
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${d.planLabel}</strong> — ${d.name} (${d.education})<br><small>${d.email} · ${d.phone}</small>`;
+          enrollListEl.appendChild(li);
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="./">Empower<span>Hub</span></a>
+      <nav>
+        <a href="./#packages">Programs</a>
+        <button class="btn small outline" onclick="window.location='login.html'">Account</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1>Welcome, <span id="userName">...</span></h1>
+      <p class="muted">Email: <span id="userEmail"></span></p>
+
+      <h2>Your Enrollments</h2>
+      <ul id="enrollList" class="list"></ul>
+    </div>
+  </main>
+</body>
+</html>

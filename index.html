@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Empower Hub — Unlock Potential, Unleash Opportunities</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Firebase SDKs (loaded in index for potential public features that don't require auth) -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="./">Empower<span>Hub</span></a>
+      <nav>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#packages">Programs</a>
+        <a href="#how">How It Works</a>
+        <a href="#partners">Partnerships</a>
+        <a href="#impact">Impact</a>
+        <a href="login.html" id="nav-account">Login</a>
+        <button id="nav-dashboard" class="btn small outline" style="display:none" onclick="window.location='dashboard.html'">Dashboard</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container grid-2">
+      <div>
+        <h1>Unlock Potential, Unleash Opportunities</h1>
+        <p class="lead">
+          A comprehensive skill development platform to bridge the gap between unemployed youth
+          and the dynamic demands of the job market—through training, mentorship, internships,
+          and real job placement support.
+        </p>
+        <div class="cta-row">
+          <a href="#packages" class="btn primary">Enroll Now</a>
+          <a href="#partners" class="btn ghost">Partner With Us</a>
+        </div>
+        <div class="team-line">By: Aarna Agarwal, Swarnika Sinha, Yuvaan Goel, Vivaan Sharma, Vibhore Singh</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">~13.6%</div>
+            <div class="stat-label">Global youth unemployment (2024)</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">64.9M</div>
+            <div class="stat-label">Youth unemployed worldwide (2023)</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">272M</div>
+            <div class="stat-label">Children & youth out of school</div>
+          </div>
+        </div>
+        <small class="stat-source">Sources: ILO, Macrotrends, UNESCO (as cited in Empower Hub concept)</small>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem" class="section">
+    <div class="container">
+      <h2>The Challenge: Bridging the Youth Unemployment Gap</h2>
+      <div class="cards three">
+        <div class="card">
+          <h3>Skills Mismatch</h3>
+          <p>Many youth lack industry-relevant skills and practical experience.</p>
+        </div>
+        <div class="card">
+          <h3>Dropouts & Unprepared Graduates</h3>
+          <p>High rates of school dropouts and graduates unprepared for job market realities.</p>
+        </div>
+        <div class="card">
+          <h3>Economic Drag</h3>
+          <p>Unemployment fuels inequality and slows local economic growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution" class="section alt">
+    <div class="container">
+      <h2>Our Solution — Empower Hub</h2>
+      <p class="center max-700">
+        Structured learning packages (6–12 months), hands-on projects, mentorship,
+        internships with local businesses, and robust job placement assistance.
+      </p>
+      <div class="flow">
+        <div class="flow-step"><span>1</span> Learn</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span>2</span> Train</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span>3</span> Intern</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span>4</span> Get Hired</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages" class="section">
+    <div class="container">
+      <h2>Program Packages & Pricing</h2>
+      <div class="cards two">
+        <div class="card">
+          <h3>6‑Month Foundational + Specialized</h3>
+          <ul class="tick">
+            <li>Foundational communication & IT skills</li>
+            <li>Specialized training by interest/degree</li>
+            <li>E‑books, notes, worksheets</li>
+            <li>Doubt-clearing sessions</li>
+            <li>Hands‑on project work</li>
+          </ul>
+          <div class="price">₹500</div>
+          <button class="btn primary" data-plan="6m" onclick="openEnroll(this)">Enroll</button>
+        </div>
+        <div class="card">
+          <h3>1‑Year Comprehensive Pathway</h3>
+          <ul class="tick">
+            <li>Everything in 6‑month plan</li>
+            <li>Extended specialization</li>
+            <li>Premier internship opportunities</li>
+            <li>Career counseling & mentorship</li>
+            <li>Job placement assistance</li>
+          </ul>
+          <div class="price">₹1000</div>
+          <button class="btn primary" data-plan="12m" onclick="openEnroll(this)">Enroll</button>
+        </div>
+      </div>
+
+      <!-- Enroll Modal -->
+      <dialog id="enrollModal">
+        <form method="dialog" class="dialog-card" onsubmit="return false;">
+          <h3>Enroll in Empower Hub</h3>
+          <p class="small muted" id="planSelected"></p>
+          <label>
+            Full Name
+            <input type="text" id="enrollName" placeholder="Your name" required/>
+          </label>
+          <label>
+            Email
+            <input type="email" id="enrollEmail" placeholder="your@email.com" required/>
+          </label>
+          <label>
+            Phone
+            <input type="tel" id="enrollPhone" placeholder="+91-XXXXXXXXXX" required/>
+          </label>
+          <label>
+            Highest Education
+            <select id="enrollEducation" required>
+              <option value="">Select…</option>
+              <option>School dropout</option>
+              <option>Class 12</option>
+              <option>Undergraduate</option>
+              <option>Graduate</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>
+            Area of Interest / Specialization
+            <input type="text" id="enrollInterest" placeholder="e.g., IT support, retail, design"/>
+          </label>
+          <div class="dialog-actions">
+            <button class="btn ghost" onclick="closeEnroll()">Cancel</button>
+            <button class="btn primary" id="enrollSubmit">Submit</button>
+          </div>
+          <p class="small center muted">You must be logged in. <a href="login.html">Login or create an account</a>.</p>
+        </form>
+      </dialog>
+    </div>
+  </section>
+
+  <section id="how" class="section alt">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="cards four">
+        <div class="card">
+          <h3>Industry-Relevant</h3>
+          <p>Collaborate with local businesses for high-demand skills.</p>
+        </div>
+        <div class="card">
+          <h3>Hands‑On</h3>
+          <p>Projects & internships to build a strong portfolio.</p>
+        </div>
+        <div class="card">
+          <h3>Mentorship</h3>
+          <p>Experienced professionals guiding career growth.</p>
+        </div>
+        <div class="card">
+          <h3>Placement Support</h3>
+          <p>Connections with local employers for real jobs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="partners" class="section">
+    <div class="container">
+      <h2>Partnerships</h2>
+      <div class="cards three">
+        <div class="card">
+          <h3>Local Businesses</h3>
+          <p>Identify skill gaps, offer training projects & placements.</p>
+        </div>
+        <div class="card">
+          <h3>NGOs</h3>
+          <p>Reach marginalized youth and amplify impact.</p>
+        </div>
+        <div class="card">
+          <h3>Government</h3>
+          <p>Funding, policy alignment, and public resources.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="impact" class="section alt">
+    <div class="container center">
+      <h2>Impact Goals</h2>
+      <div class="impact-grid">
+        <div class="impact-card"><span>500+</span> youth trained in first 2 years</div>
+        <div class="impact-card"><span>85%</span> placement within 6 months</div>
+        <div class="impact-card"><span>70%</span> show career progress in 2 years</div>
+        <div class="impact-card"><span>90%</span> participant satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo">Empower<span>Hub</span></div>
+        <p class="muted small">Join our mission to empower youth through skills, experience, and opportunity.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p class="small">Phone: 001-001-0101<br/>Email: empowerhub@gmail.com</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <p class="small"><a href="login.html">Login</a> · <a href="dashboard.html">Dashboard</a></p>
+      </div>
+    </div>
+    <div class="tiny center muted">© Empower Hub</div>
+  </footer>
+</body>
+</html>
