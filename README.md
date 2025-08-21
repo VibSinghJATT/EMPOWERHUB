@@ -1,54 +1,27 @@
-# Empower Hub — Static Website (GitHub Pages Ready)
+# 📘 Empower Hub Website
 
-This is a simple, production-style static site (HTML/CSS/JS) that uses **Firebase** on the client for:
-- **Authentication** (Email/Password)
-- **Firestore** storage for **enrollments** and **users**
+Empower Hub is a platform designed to help students and job seekers **learn → train → intern → get hired**.  
+This repository contains the website frontend built with **HTML, CSS, JavaScript, Firebase (Auth + Firestore)**, and deployed via **GitHub Pages**.
 
-It works on **GitHub Pages** without any server-side code.
+---
 
-## 🚀 Quick Start
+## 🚀 Features
+- 🔑 **User Authentication**
+  - Email & Password Login
+  - Google Sign-in
+  - Passwordless Email Link
+  - Phone Number + OTP Login
 
-1. Create a Firebase project: https://console.firebase.google.com
-2. Build a Web App in the project and copy your config.
-3. In `firebase.js`, replace the placeholder `firebaseConfig` with your config.
-4. In Firebase Console:
-   - Enable **Authentication → Sign-in method → Email/Password**.
-   - Enable **Firestore Database**.
-5. (Optional but recommended) Set Firestore Security Rules (basic example below).
-6. Push these files to your GitHub repo and enable **GitHub Pages**.
+- 🎓 **Enrollments**
+  - Users can enroll in programs
+  - Enrollment data stored securely in Firestore
 
-## 🔐 Firestore Rules (basic starter)
+- 📊 **Dashboard**
+  - View user profile and enrollment status
 
-> Adjust as you grow; this is a minimal example for personal projects.
+- 🔐 **Secure Firestore Rules** (see `firestore.rules`)
+  - Users can only view/update their own data
 
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
-    }
-    match /enrollments/{docId} {
-      allow create: if request.auth != null;
-      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
-    }
-  }
-}
-```
+---
 
-## 📁 Structure
-
-- `index.html` — Home, programs, enroll modal (saves to Firestore)
-- `login.html` — Login/Register (Firebase Auth)
-- `dashboard.html` — Shows user profile + enrollments
-- `styles.css` — Minimal dark UI
-- `firebase.js` — Firebase init + exports (CDN modular SDK)
-- `auth.js` — Auth page logic
-- `app.js` — Home page logic (enroll modal + save)
-- `README.md` — This guide
-
-## ✅ Notes
-- Enrollment requires login; user is redirected to login if needed.
-- Dashboard lists enrollments for the logged-in user.
-- You can later add an **admin dashboard** and **payment** (Razorpay/Stripe) integration.
+## 📂 Project Structure
